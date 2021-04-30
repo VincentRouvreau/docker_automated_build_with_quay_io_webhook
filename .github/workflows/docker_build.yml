@@ -1,0 +1,25 @@
+# If you have to modify this file, it will trigger a build of quay.io/vincentrouvreau/quay_automated_build
+# docker image used by .github/workflows/test_sample.yml
+# Please consider making a separate PR for docker to be built, and your changes in the code
+
+name: docker build for quay.io
+
+on:
+  push:
+    paths:
+      - 'Dockerfile'
+      - 'requirements.txt'
+      - '.github/workflows/docker_build.yml'
+
+jobs:
+  build:
+    name: Webhook
+    runs-on: ubuntu-latest
+    env:
+      QUAY_WEBHOOK_URL: ${{ secrets.QUAY_WEBHOOK_URL }}
+      # QUAY_DEFAULT_BRANCH: ${{ secrets.QUAY_DEFAULT_BRANCH }}
+    steps:
+      # cf. https://github.com/VincentRouvreau/automated-quay.io-deployment/blob/master/README.md
+      - name: Webhook on quay.io
+        run: |
+          curl -s https://raw.githubusercontent.com/VincentRouvreau/automated-quay.io-deployment/master/deploy-on-quay | sh

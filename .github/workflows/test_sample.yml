@@ -1,0 +1,19 @@
+name: test sample package
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    name: Test sequence
+    runs-on: ubuntu-latest
+    container: quay.io/vincentrouvreau/quay_automated_build
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          submodules: true
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+      - name: Unitary tests
+        run: |
+          pytest
