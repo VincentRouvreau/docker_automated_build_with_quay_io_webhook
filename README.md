@@ -30,10 +30,30 @@ example.
 ## Dockerfile
 
 A first approach would be to install dependencies as described here:
-https://github.com/VincentRouvreau/docker_automated_build_with_quay_io_webhook/blob/b62ebad3ed2b2bee14a39ed1a3f18a7e072f3602/Dockerfile#L12-L14
+```docker
+FROM python:3.7-alpine
+
+# required for numpy
+RUN apk add g++
+
+# 1st solution
+RUN pip install numpy pytest
+```
+
+This solution is not really [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself).
 
 A better approach would be to install dependencies from the requirements.txt:
-https://github.com/VincentRouvreau/docker_automated_build_with_quay_io_webhook/blob/b62ebad3ed2b2bee14a39ed1a3f18a7e072f3602/Dockerfile#L16-L18
+
+```
+FROM python:3.7-alpine
+
+# required for numpy
+RUN apk add g++
+
+# 2nd solution
+COPY requirements.txt /
+RUN pip install -r /requirements.txt
+```
 
 Now, the question is how to build the docker image when Dockerfile and/or
 requirements.txt change ?
