@@ -44,7 +44,7 @@ This solution is not really [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_y
 
 A better approach would be to install dependencies from the requirements.txt:
 
-```
+```docker
 FROM python:3.7-alpine
 
 # required for numpy
@@ -87,5 +87,6 @@ Now you can have a look to
 to see how the webhook is triggered and see that it will be only `on`
 Dockerfile and/or requirements.txt `push`.
 
-The other GitHub action will just have to use the docker image (that will be up
-to date thanks to the `docker_build` GitHub action) and to launch `pytest`.
+The other GitHub action [test_sample.yml](.github/workflows/test_sample.yml)
+will just have to use the docker image (that will be up to date thanks to the
+`docker_build` GitHub action) and to launch `pytest`.
