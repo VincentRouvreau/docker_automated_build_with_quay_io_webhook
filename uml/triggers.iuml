@@ -1,0 +1,6 @@
+@startuml
+GitHub -> Quay.io:  triggers docker image build
+note left: Dependency change
+GitHub -> CI: triggers Unitary tests
+note left: Code change
+@enduml
